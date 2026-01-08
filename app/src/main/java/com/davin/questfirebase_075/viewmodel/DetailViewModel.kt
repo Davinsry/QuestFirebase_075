@@ -19,3 +19,12 @@ sealed interface StatusUIDetail {
 }
 
 class DetailViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val repositorySiswa: RepositorySiswa
+) : ViewModel() {
+
+    // KUNCI ERROR: ID dikirim sebagai String dari Navigasi, harus di-convert ke Long
+
+
+
+}
