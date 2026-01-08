@@ -97,3 +97,51 @@ fun DetailSiswaScreen(
     }
 }
 
+@Composable
+private fun BodyDetailDataSiswa(
+    statusUIDetail: StatusUIDetail,
+    onDelete: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
+    ) {
+        var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
+        when (statusUIDetail) {
+            is StatusUIDetail.Success -> {
+                // PERBAIKAN 2: Pastikan data tidak null sebelum dikirim ke DetailDataSiswa
+                statusUIDetail.satuSiswa?.let { siswa ->
+                    DetailDataSiswa(
+                        siswa = siswa,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedButton(
+                        onClick = { deleteConfirmationRequired = true },
+                        shape = MaterialTheme.shapes.small,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(stringResource(R.string.delete))
+                    }
+                }
+            }
+            is StatusUIDetail.Loading -> {
+                Text(text = "Loading...", modifier = Modifier.padding(16.dp))
+            }
+            is StatusUIDetail.Error -> {
+                Text(text = "Gagal memuat data", modifier = Modifier.padding(16.dp))
+            }
+        }
+
+        if (deleteConfirmationRequired) {
+            DeleteConfirmationDialog(
+                onDeleteConfirm = {
+                    deleteConfirmationRequired = false
+                    onDelete()
+                },
+                onDeleteCancel = { deleteConfirmationRequired = false }
+            )
+        }
+    }
+}
+
