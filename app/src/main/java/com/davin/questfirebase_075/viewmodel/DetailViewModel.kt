@@ -12,6 +12,10 @@ import com.davin.questfirebase_075.view.route.DestinasiDetail
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-
+sealed interface StatusUIDetail {
+    data class Success(val satuSiswa: Siswa?) : StatusUIDetail
+    object Error : StatusUIDetail
+    object Loading : StatusUIDetail
+}
 
 class DetailViewModel(
