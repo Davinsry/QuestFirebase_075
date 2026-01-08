@@ -58,6 +58,11 @@ service cloud.firestore {
 
 <img width="1918" height="938" alt="image" src="https://github.com/user-attachments/assets/3f07bff3-d706-4cab-a458-d644f96a9a22" />
 <img width="617" height="826" alt="image" src="https://github.com/user-attachments/assets/5ca2ce59-f1ef-4405-93d2-cfe02ae0f742" />
+<img width="347" height="785" alt="image" src="https://github.com/user-attachments/assets/cd8517cc-f089-4c72-9a4a-707456091a18" />
+<img width="352" height="783" alt="image" src="https://github.com/user-attachments/assets/2f49bd23-bb2e-48f6-9ce0-643e19e04fad" />
+<img width="350" height="784" alt="image" src="https://github.com/user-attachments/assets/d4f99464-cb0a-427e-b542-055b38cfd52d" />
+<img width="349" height="784" alt="image" src="https://github.com/user-attachments/assets/237dd645-085c-4f95-b388-e8f25fc6050c" />
+
 
 
 
