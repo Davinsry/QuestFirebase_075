@@ -145,3 +145,37 @@ private fun BodyDetailDataSiswa(
     }
 }
 
+@Composable
+fun DetailDataSiswa(
+    siswa: Siswa, // Diubah menjadi Siswa (bukan Siswa?) agar tidak perlu !! di dalamnya
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(dimensionResource(id = R.dimen.padding_medium)),
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_medium))
+        ) {
+            BarisDetailData(
+                labelResID = R.string.nama,
+                itemDetail = siswa.nama
+            )
+            BarisDetailData(
+                labelResID = R.string.alamat,
+                itemDetail = siswa.alamat
+            )
+            BarisDetailData(
+                labelResID = R.string.telpon,
+                itemDetail = siswa.telpon
+            )
+        }
+    }
+}
+
