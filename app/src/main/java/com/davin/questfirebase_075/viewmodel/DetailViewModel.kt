@@ -48,5 +48,12 @@ class DetailViewModel(
     }
 
     // Fungsi suspend agar bisa dipanggil di Coroutine scope milik UI (Composable)
-
+    suspend fun hapusSatuSiswa() {
+        try {
+            repositorySiswa.deleteSiswa(idSiswa)
+        } catch (e: Exception) {
+            // Handle error jika diperlukan
+            println("Gagal Hapus Data: ${e.message}")
+        }
+    }
 }
