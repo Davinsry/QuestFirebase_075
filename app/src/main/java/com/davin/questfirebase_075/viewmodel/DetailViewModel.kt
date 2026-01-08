@@ -19,3 +19,34 @@ sealed interface StatusUIDetail {
     object Loading : StatusUIDetail
 }
 
+class DetailViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val repositorySiswa: RepositorySiswa
+) : ViewModel() {
+
+    // Mengambil idSiswa dari argumen navigasi (SavedStateHandle)
+    private val idSiswa: Long = checkNotNull(savedStateHandle[DestinasiDetail.itemIdArg])
+
+    var statusUIDetail: StatusUIDetail by mutableStateOf(StatusUIDetail.Loading)
+        private set
+
+    init {
+        getSatuSiswa()
+    }
+
+    fun getSatuSiswa() {
+        viewModelScope.launch {
+            statusUIDetail = StatusUIDetail.Loading
+            statusUIDetail = try {
+                StatusUIDetail.Success(repositorySiswa.getSiswaById(idSiswa))
+            } catch (e: IOException) {
+                StatusUIDetail.Error
+            } catch (e: Exception) {
+                StatusUIDetail.Error
+            }
+        }
+    }
+
+    // Fungsi suspend agar bisa dipanggil di Coroutine scope milik UI (Composable)
+
+}
