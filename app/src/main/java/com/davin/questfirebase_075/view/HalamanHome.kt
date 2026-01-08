@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -47,7 +46,7 @@ import com.davin.questfirebase_075.viewmodel.StatusUiSiswa
 @Composable
 fun HomeScreen(
     navigateToItemEntry: () -> Unit,
-    navigateToItemUpdate: (String) -> Unit,
+    navigateToItemUpdate: (Int) -> Unit, // Mengikuti gambar: Int
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
@@ -55,7 +54,6 @@ fun HomeScreen(
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            // Pastikan SiswaTopAppBar sudah dibuat (biasanya custom component)
             SiswaTopAppBar(
                 title = stringResource(DestinasiHome.titleRes),
                 canNavigateBack = false,
@@ -89,35 +87,33 @@ fun HomeScreen(
 @Composable
 fun HomeBody(
     statusUiSiswa: StatusUiSiswa,
-    onSiswaClick: (String) -> Unit,
+    onSiswaClick: (Int) -> Unit,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when (statusUiSiswa) {
-            is StatusUiSiswa.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
+            is StatusUiSiswa.Loading -> LoadingScreen()
             is StatusUiSiswa.Success -> DaftarSiswa(
-                // PERBAIKAN 1: Gunakan .siswa (bukan .dataSiswa)
                 itemSiswa = statusUiSiswa.siswa,
-                // PERBAIKAN 2: Tambahkan .toString() karena ID tipe Long
-                onSiswaClick = { onSiswaClick(it.id.toString()) },
-                modifier = modifier.fillMaxWidth()
+                onSiswaClick = { onSiswaClick(it.id.toInt()) }
             )
             is StatusUiSiswa.Error -> ErrorScreen(
-                retryAction,
+                retryAction = retryAction,
                 modifier = modifier.fillMaxSize()
             )
         }
     }
 }
+
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     Image(
         modifier = modifier.size(200.dp),
-        // Pastikan ada gambar bernama 'loading_img.png' atau xml di folder drawable
-        painter = painterResource(R.drawable.loading_img),
+        painter = painterResource(R.drawable.loading_img), // Pastikan ada gambar ini
         contentDescription = stringResource(R.string.loading)
     )
 }
@@ -129,14 +125,7 @@ fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // --- BAGIAN YANG DIUBAH (Hapus Image, Ganti Icon) ---
-        androidx.compose.material3.Icon(
-            imageVector = androidx.compose.material.icons.Icons.Default.Warning,
-            contentDescription = null,
-            modifier = Modifier.size(72.dp) // Biar ikonnya agak besar
-        )
-        // ----------------------------------------------------
-
+        // Ganti R.string.gagal sesuai resource string kamu, misal "Gagal Memuat Data"
         Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
         Button(onClick = retryAction) {
             Text(stringResource(R.string.retry))
@@ -150,10 +139,7 @@ fun DaftarSiswa(
     onSiswaClick: (Siswa) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
-        modifier = modifier,
-        contentPadding = PaddingValues(bottom = 80.dp) // Tambahan padding agar list terbawah tidak tertutup FAB
-    ) {
+    LazyColumn(modifier = modifier) {
         items(items = itemSiswa, key = { it.id }) { person ->
             ItemSiswa(
                 siswa = person,
