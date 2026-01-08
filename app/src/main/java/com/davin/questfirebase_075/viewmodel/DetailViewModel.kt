@@ -24,7 +24,15 @@ class DetailViewModel(
 ) : ViewModel() {
 
     // KUNCI ERROR: ID dikirim sebagai String dari Navigasi, harus di-convert ke Long
+    private val idSiswa: Long = savedStateHandle.get<String>(DestinasiDetail.itemIdArg)?.toLong()
+        ?: error("idSiswa tidak ditemukan di SavedStateHandle")
 
+    var statusUIDetail: StatusUIDetail by mutableStateOf(StatusUIDetail.Loading)
+        private set
+
+    init {
+        getSatuSiswa()
+    }
 
 
 }
