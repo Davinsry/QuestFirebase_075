@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1037589139392",
+    "project_id": "gen-lang-client-0487118411",
+    "storage_bucket": "gen-lang-client-0487118411.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037589139392:android:2fc189f149ecceb5ba8225",
+        "android_client_info": {
+          "package_name": "com.davin.questfirebase_075"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDx7xPNuGo5RRyvyOvKYQADcMErCkjl34A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
