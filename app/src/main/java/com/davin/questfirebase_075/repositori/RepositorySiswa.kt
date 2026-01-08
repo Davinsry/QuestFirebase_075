@@ -70,5 +70,10 @@ class FirebaseRepositorySiswa : RepositorySiswa {
         }
     }
 
-
+    override suspend fun hapusSatuSiswa(id: Long) {
+        val querySnapshot = collection.whereEqualTo("id", id).get().await()
+        for (document in querySnapshot.documents) {
+            document.reference.delete().await()
+        }
+    }
 }
